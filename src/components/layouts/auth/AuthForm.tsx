@@ -8,11 +8,10 @@ import { toast } from "react-hot-toast";
 const AuthForm: FC = () => {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
-  const HelperGoogleLogin = () => {
+  const HelperGoogleLogin = (action: string) => {
     setIsLoading(true);
     try {
-      throw "lol err";
-      signIn("google");
+      signIn(action);
     } catch (err: any) {
       toast.error(err?.message ? err?.message : "Something went Wrong!");
     } finally {
@@ -21,15 +20,24 @@ const AuthForm: FC = () => {
   };
 
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center flex-col gap-3 py-2 ">
       <Button
         size="sm"
         isLoading={isLoading}
         className="w-full flex items-center gap-3 px-5  "
-        onClick={HelperGoogleLogin}
+        onClick={() => HelperGoogleLogin("google")}
       >
         {!isLoading && <Icons.GoogleLogo className="h-5 w-5" />}
         Sign in with Google
+      </Button>
+      <Button
+        size="sm"
+        isLoading={isLoading}
+        className="w-full flex items-center gap-3 px-5 bg-[#6e5494] hover:bg-[#462579] "
+        onClick={() => HelperGoogleLogin("github")}
+      >
+        {!isLoading && <Icons.GithubLogo className="h-5 w-5" />}
+        Sign in with Github
       </Button>
     </div>
   );

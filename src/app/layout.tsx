@@ -1,7 +1,7 @@
 import NavBar from "@/components/layouts/NavBar";
 import { cn } from "@/lib/utils";
 import "@/styles/globals.css";
-import { Catamaran } from "next/font/google";
+import { Inter } from "next/font/google";
 import { Toaster } from "react-hot-toast";
 
 export const metadata = {
@@ -9,7 +9,7 @@ export const metadata = {
   description: "A Reddit clone built with Next.js and TypeScript.",
 };
 
-const catamaran = Catamaran({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"] });
 
 export default function RootLayout({
   children,
@@ -21,13 +21,13 @@ export default function RootLayout({
       lang="en"
       className={cn(
         " text-slate-900 bg-white antialiased light",
-        catamaran.className
+        inter.className
       )}
     >
       <body className="min-h-screen antialiased bg-slate-50 pt-12 ">
         <Toaster
           toastOptions={{
-            duration: 2000
+            duration: 2000,
           }}
         />
         <NavBar />
