@@ -30,6 +30,7 @@ export default function RootLayout({
             duration: 2000,
           }}
         />
+        {/* @ts-expact-error server component */}
         <NavBar />
         <div className="container max-w-7xl mx-auto h-full pt-12 ">
           {children}
