@@ -43,7 +43,7 @@ const UserProfile: FC<UserProfileProps> = ({ user }) => {
               <Link href="/">Feed</Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
-              <Link href="/r/create">Create Community</Link>
+              <Link href="/broadcast/create">Create Community</Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
               <Link href="/settings">Settings</Link>
