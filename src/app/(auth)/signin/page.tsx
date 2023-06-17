@@ -1,5 +1,5 @@
 import { Icons } from "@/components/icons/Icons";
-import SignIn from "@/components/layouts/SignIn";
+import SignIn from "@/components/layouts/auth/SignIn";
 import { buttonVariants } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
 import Link from "next/link";

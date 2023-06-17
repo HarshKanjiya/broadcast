@@ -10,12 +10,10 @@ const AuthForm: FC = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
-  const lol = () => toast.success("erth")
-
   const HelperSignin = (action: string) => {
     setIsLoading(true);
     try {
-      signIn(action, { redirect: false }).then((callback) => {
+      signIn(action).then((callback) => {
         if (callback?.error) {
           toast.error("Invalid credentials!");
         }
@@ -33,7 +31,6 @@ const AuthForm: FC = () => {
 
   return (
     <div className="flex justify-center flex-col gap-3 py-2 ">
-      <button onClick={lol} >qwertyuiuytrew</button>
       <Button
         size="sm"
         isLoading={isLoading}
@@ -41,10 +38,9 @@ const AuthForm: FC = () => {
         onClick={() => HelperSignin("google")}
       >
         {!isLoading && <Icons.GoogleLogo className="h-5 w-5" />}
-        Sign in with Google
+        Get Started with Google
       </Button>
 
-      
       {/* <Button
         size="sm"
         isLoading={isLoading}
