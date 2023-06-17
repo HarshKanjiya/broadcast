@@ -4,12 +4,14 @@ import { Input } from "@/components/ui/Input";
 import { useRouter } from "next/navigation";
 import { FC, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { CreateBroadcastPayload } from "@/lib/validators/broadcast";
+import { toast } from "react-hot-toast";
 
 const Page: FC = ({}) => {
   const router = useRouter();
   const [name, setName] = useState<string>("");
+  const [err, setErr] = useState<string>("");
 
   const {
     mutate: createBroadcast,
@@ -23,6 +25,26 @@ const Page: FC = ({}) => {
       };
       const { data } = await axios.post("/api/broadcast", payload);
       return data as string;
+    },
+    onError: (err) => {
+      if (err instanceof AxiosError) {
+        if (err.response?.status === 409) {
+          return setErr("Please chose different Name this one already Exists");
+        }
+        if (err.response?.status === 422) {
+          return setErr("Name must be between 3 to 28 characters");
+        }
+        if (err.response?.status === 401) {
+          return toast.error("Please, login to Create your Broadcast");
+        }
+      }
+      toast.error("Failed to Create Broadcast Network");
+    },
+    onSuccess: (data) => {
+      toast.success("Your Broadcast Network has been Created!");
+      setTimeout(() => {
+        router.push(`/broadcast/${data}`);
+      }, 2000);
     },
   });
 
@@ -39,7 +61,7 @@ const Page: FC = ({}) => {
           <p className="text-lg font-medium">Name</p>
           <p>Broadcast names cannot be changegd after created.</p>
           <div className="relative mt-4">
-            <p className="absolute text-sm left-4 w-8 inset-y-0 grid place-items-center text-zinc-400 ">
+            <p className="absolute text-sm left-4 w-8 top-[11px] grid place-items-center text-zinc-400 ">
               broadcast/
             </p>
             <Input
@@ -49,6 +71,11 @@ const Page: FC = ({}) => {
                 setName(event.target.value);
               }}
             />
+            {err && (
+              <p className=" text-sm text-red-300 py-0.5 block md:absolute ">
+                {err}
+              </p>
+            )}
           </div>
         </div>
 
@@ -63,7 +90,7 @@ const Page: FC = ({}) => {
           </Button>
           <Button
             isLoading={isLoading}
-            disabled={name.trim().length === 0}
+            disabled={name.trim().length === 0 || isLoading}
             onClick={() => createBroadcast()}
           >
             Create

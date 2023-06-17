@@ -30,8 +30,9 @@ export default function RootLayout({
       <Providers>
         <body className="min-h-screen antialiased bg-slate-50 pt-12 ">
           <Toaster
+          
             toastOptions={{
-              duration: 2000,
+              duration: 2500,
             }}
           />
           {/* @ts-expect-error server component */}

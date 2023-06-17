@@ -34,10 +34,11 @@ export async function POST(req: Request) {
       },
     });
 
-    return new Response(broadcast.name, { status: 20 });
+    return new Response(broadcast.name, { status: 200 });
   } catch (err) {
     if (err instanceof z.ZodError) {
-         
+      return new Response(err.message, { status: 422 });
     }
+    return new Response("Could not create your Broadcast", { status: 500 });
   }
 }
