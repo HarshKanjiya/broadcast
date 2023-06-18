@@ -1,4 +1,4 @@
-import CreatePostComp from "@/components/layouts/posts/CreatePostComp";
+import CreatePostComp from "@/components/layouts/broadcast/CreatePostComp";
 import { INFINITE_SCROLLING_PAGINATION_VARIABLE } from "@/config";
 import { getAuthSession } from "@/lib/AuthOptions";
 import { db } from "@/lib/db";
@@ -40,7 +40,7 @@ const page = async function ({ params: { slug } }: pageProps) {
 
       {/* //* user feed */}
 
-      
+
     </>
   );
 };
