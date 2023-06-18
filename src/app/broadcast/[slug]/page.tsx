@@ -1,6 +1,8 @@
+import CreatePostComp from "@/components/layouts/posts/CreatePostComp";
+import { INFINITE_SCROLLING_PAGINATION_VARIABLE } from "@/config";
 import { getAuthSession } from "@/lib/AuthOptions";
 import { db } from "@/lib/db";
-import { FC } from "react";
+import { notFound } from "next/navigation";
 
 interface pageProps {
   params: {
@@ -21,11 +23,26 @@ const page = async function ({ params: { slug } }: pageProps) {
           comments: true,
           Broadcast: true,
         },
+        take: INFINITE_SCROLLING_PAGINATION_VARIABLE,
       },
     },
   });
 
-  return <div>page</div>;
+  if (!broadcast) return notFound();
+
+  return (
+    <>
+      <h1 className="font-bold text-3xl md:text-4xl  h-14">
+        broadcast / {broadcast.name}
+      </h1>
+
+      <CreatePostComp session={session} />
+
+      {/* //* user feed */}
+
+      
+    </>
+  );
 };
 
 page.displayName = "page";
