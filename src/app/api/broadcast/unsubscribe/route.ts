@@ -28,6 +28,18 @@ export async function POST(req: Request) {
       });
     }
 
+    const broadcast = await db.broadcast.findFirst({
+      where: {
+        id: broadcastId,
+        creatorId: session.user.id,
+      },
+    });
+
+    if (broadcast)
+      return new Response("You cannot Unsubscribe to your Network!", {
+        status: 422,
+      });
+
     await db.subscription.delete({
       where: {
         userId_BroadcastId: {
