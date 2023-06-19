@@ -32,7 +32,7 @@ const page = async ({ params: { slug } }: pageProps) => {
 
       {/* //*form */}
 
-      <Editor />
+      <Editor broadcastId={broadcast.id} broadcastName={broadcast.name} />
 
       <div className="w-full flex justify-end">
         <Button type="submit" className="w-full " form="broadcast-post-form">
