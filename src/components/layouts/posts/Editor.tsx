@@ -166,10 +166,10 @@ const Editor: FC<EditorProps> = ({ broadcastId, broadcastName }) => {
     <div className="w-full  p-4 bg-white rounded-lg border border-zinc-200">
       <form
         id="broadcast-post-form"
-        className="w-full"
+        className="w-full flex justify-center"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <div className="prose prose-stone dark:prose-invert ">
+        <div className="prose prose-stone dark:prose-invert bg-red">
           <TextareaAutosize
             ref={(e) => {
               titleRef(e);
