@@ -1,4 +1,5 @@
 import CreatePostComp from "@/components/layouts/broadcast/CreatePostComp";
+import PostFeed from "@/components/layouts/posts/PostFeed";
 import { INFINITE_SCROLLING_PAGINATION_VARIABLE } from "@/config";
 import { getAuthSession } from "@/lib/AuthOptions";
 import { db } from "@/lib/db";
@@ -38,9 +39,7 @@ const page = async function ({ params: { slug } }: pageProps) {
 
       <CreatePostComp session={session} />
 
-      {/* //* user feed */}
-
-
+      <PostFeed initialPosts={[]} broadcastName={broadcast.name} />
     </>
   );
 };
