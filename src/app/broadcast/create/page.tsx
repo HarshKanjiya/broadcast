@@ -42,9 +42,7 @@ const Page: FC = ({}) => {
     },
     onSuccess: (data) => {
       toast.success("Your Broadcast Network has been Created!");
-      setTimeout(() => {
-        router.push(`/broadcast/${data}`);
-      }, 2000);
+      router.push(`/broadcast/${data}`);
     },
   });
 

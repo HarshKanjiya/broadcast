@@ -34,7 +34,7 @@ export async function POST(req: Request) {
 
     await db.post.create({
       data: {
-        BroadcastId: broadcastId,
+        broadcastId: broadcastId,
         authorId: session.user.id,
         title,
         content,

@@ -10,6 +10,7 @@ import { toast } from "react-hot-toast";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { usePathname, useRouter } from "next/navigation";
+import { Button } from "@/components/ui/Button";
 
 interface EditorProps {
   broadcastId: string;
@@ -124,7 +125,7 @@ const Editor: FC<EditorProps> = ({ broadcastId, broadcastName }) => {
     }
   }, [isMounted, initializeEditor]);
 
-  const { mutate: submitPost } = useMutation({
+  const { mutate: submitPost, isLoading } = useMutation({
     mutationFn: async (data: PostCreationRequest) => {
       const payload: PostCreationRequest = data;
       const { data: res } = await axios.post(
@@ -163,27 +164,39 @@ const Editor: FC<EditorProps> = ({ broadcastId, broadcastName }) => {
   const { ref: titleRef, ...rest } = register("title");
 
   return (
-    <div className="w-full  p-4 bg-white rounded-lg border border-zinc-200">
-      <form
-        id="broadcast-post-form"
-        className="w-full flex justify-center"
-        onSubmit={handleSubmit(onSubmit)}
-      >
-        <div className="prose prose-stone dark:prose-invert bg-red">
-          <TextareaAutosize
-            ref={(e) => {
-              titleRef(e);
-              //@ts-ignore
-              _titleRef.current = e;
-            }}
-            {...rest}
-            placeholder="title"
-            className="w-full resize-none appearance-none overflow-hidden bg-transparent text-5xl font-bold focus:outline-none"
-          />
-          <div id="editor" className="min-h-[450px] " />
-        </div>
-      </form>
-    </div>
+    <>
+      <div className="w-full  p-4 bg-white rounded-lg border border-zinc-200">
+        <form
+          id="broadcast-post-form"
+          className="w-full flex justify-center"
+          onSubmit={handleSubmit(onSubmit)}
+        >
+          <div className="prose prose-stone dark:prose-invert bg-red">
+            <TextareaAutosize
+              ref={(e) => {
+                titleRef(e);
+                //@ts-ignore
+                _titleRef.current = e;
+              }}
+              {...rest}
+              placeholder="title"
+              className="w-full resize-none appearance-none overflow-hidden bg-transparent text-5xl font-bold focus:outline-none"
+            />
+            <div id="editor" className="min-h-[450px] " />
+          </div>
+        </form>
+      </div>
+      <div className="w-full flex justify-end">
+        <Button
+          isLoading={isLoading}
+          type="submit"
+          className="w-full "
+          form="broadcast-post-form"
+        >
+          Post
+        </Button>
+      </div>
+    </>
   );
 };
 
