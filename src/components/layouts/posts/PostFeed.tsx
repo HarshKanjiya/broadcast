@@ -58,11 +58,22 @@ const PostFeed: FC<PostFeedProps> = ({ broadcastName, initialPosts }) => {
         if (index === posts.length - 1) {
           return (
             <li key={post.id} ref={ref}>
-              <Post />
+              <Post
+                commentAmt={post.comments.length}
+                post={post}
+                broadcastName={broadcastName}
+              />
             </li>
           );
         } else {
-          return <Post key={post.id} />;
+          return (
+            <Post
+              commentAmt={post.comments.length}
+              post={post}
+              key={post.id}
+              broadcastName={broadcastName}
+            />
+          );
         }
       })}
     </ul>
