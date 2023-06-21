@@ -22,7 +22,10 @@ const page = async function ({ params: { slug } }: pageProps) {
           author: true,
           votes: true,
           comments: true,
-          Broadcast: true,
+          broadcast: true,
+        },
+        orderBy: {
+          createdAt: "desc",
         },
         take: INFINITE_SCROLLING_PAGINATION_VARIABLE,
       },
@@ -39,7 +42,7 @@ const page = async function ({ params: { slug } }: pageProps) {
 
       <CreatePostComp session={session} />
 
-      <PostFeed initialPosts={[]} broadcastName={broadcast.name} />
+      <PostFeed initialPosts={broadcast.posts} broadcastName={broadcast.name} />
     </>
   );
 };

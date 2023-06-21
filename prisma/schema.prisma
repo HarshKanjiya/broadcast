@@ -93,8 +93,8 @@ model Post {
   updatedAt   DateTime  @updatedAt
   author      User      @relation(fields: [authorId], references: [id])
   authorId    String
-  Broadcast   Broadcast @relation(fields: [BroadcastId], references: [id])
-  BroadcastId String
+  broadcast   Broadcast @relation(fields: [broadcastId], references: [id])
+  broadcastId String
   comments    Comment[]
   votes       Vote[]
 }

@@ -1,4 +1,4 @@
-import { Broadcast, Post, User, Vote } from "@prisma/client";
+import { Broadcast, Comment, Post, User, Vote } from "@prisma/client";
 
 export type ExtendedPost = Post & {
   broadcast: Broadcast;
