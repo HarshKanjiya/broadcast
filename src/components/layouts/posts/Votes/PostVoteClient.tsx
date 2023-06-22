@@ -76,7 +76,7 @@ const PostVoteClient: FC<PostVoteClientProps> = ({
         size="sm"
         variant="ghost"
         aria-label="up vote"
-        className=" aspect-square focus:ring-0 h-fit w-fit"
+        className=" aspect-square focus:ring-0 h-fit w-fit focus:ring-offset-0 "
         onClick={() => {
           vote("UP");
         }}
@@ -94,7 +94,7 @@ const PostVoteClient: FC<PostVoteClientProps> = ({
         size="sm"
         variant="ghost"
         aria-label="down vote"
-        className={cn("aspect-square focus:ring-0 h-fit w-fit", {
+        className={cn("aspect-square focus:ring-0 h-fit w-fit  focus:ring-offset-0", {
           "text-emerald-500": currentVote === "DOWN",
         })}
         onClick={() => {
