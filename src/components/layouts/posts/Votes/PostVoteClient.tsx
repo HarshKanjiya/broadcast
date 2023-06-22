@@ -5,9 +5,10 @@ import { PostVoteRequestValidator } from "@/lib/validators/votes";
 import { usePrevious } from "@mantine/hooks";
 import { VoteType } from "@prisma/client";
 import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { ArrowBigDown, ArrowBigUp } from "lucide-react";
 import { FC, useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
 
 interface PostVoteClientProps {
   postId: string;
@@ -24,13 +25,42 @@ const PostVoteClient: FC<PostVoteClientProps> = ({
   const [currentVote, setCurrentVote] = useState<any>(initialVoteAmt);
   const prevVote = usePrevious(currentVote);
 
-  const {} = useMutation({
+  const { mutate: vote } = useMutation({
     mutationFn: async (voteType: VoteType) => {
       const payload: PostVoteRequestValidator = {
         postId: postId,
         voteType,
       };
       const { data } = await axios.patch("/api/broadcast/post/vote", payload);
+      return data as string;
+    },
+    onError: (err, VoteType) => {
+      // @ts-ignore
+      if (VoteType === "UP") setVoteAmt((prev) => prev - 1);
+      else setVoteAmt((prev) => prev + 1);
+
+      setCurrentVote(prevVote);
+      if (err instanceof AxiosError) {
+        if (err.response?.status === 401) {
+          return toast.error("You need to login to Vote the Post!");
+        }
+      }
+
+      return toast.error("Your vote wasn't registerd, please try again!");
+    },
+    onMutate: (type: VoteType) => {
+      if (currentVote === type) {
+        // User is voting the same way again, so remove their vote
+        setCurrentVote(undefined)
+        if (type === 'UP') setVoteAmt((prev) => prev - 1)
+        else if (type === 'DOWN') setVoteAmt((prev) => prev + 1)
+      } else {
+        // User is voting in the opposite direction, so subtract 2
+        setCurrentVote(type)
+        if (type === 'UP') setVoteAmt((prev) => prev + (currentVote ? 2 : 1))
+        else if (type === 'DOWN')
+          setVoteAmt((prev) => prev - (currentVote ? 2 : 1))
+      }
     },
   });
 
@@ -45,6 +75,9 @@ const PostVoteClient: FC<PostVoteClientProps> = ({
         variant="ghost"
         aria-label="up vote"
         className=" aspect-square focus:ring-0 h-fit w-fit"
+        onClick={() => {
+          vote("UP");
+        }}
       >
         <ArrowBigUp
           className={
@@ -61,6 +94,9 @@ const PostVoteClient: FC<PostVoteClientProps> = ({
         variant="ghost"
         aria-label="down vote"
         className=" aspect-square focus:ring-0 h-fit w-fit"
+        onClick={() => {
+          vote("DOWN");
+        }}
       >
         <ArrowBigDown
           className={
