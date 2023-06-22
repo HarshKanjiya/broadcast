@@ -5,7 +5,7 @@ import { PostVoteValidator } from "@/lib/validators/votes";
 import { CachedPost } from "@/types/redis";
 import { z } from "zod";
 
-const CACHE_AFTER_UPVOTE = 2;
+const CACHE_AFTER_UPVOTES = 2;
 
 export async function PATCH(req: Request) {
   try {
@@ -23,6 +23,7 @@ export async function PATCH(req: Request) {
       },
     });
 
+
     const post = await db.post.findUnique({
       where: { id: postId },
       include: { author: true, votes: true },
@@ -33,6 +34,7 @@ export async function PATCH(req: Request) {
     }
 
     if (existingVote) {
+      // if vote type is the same as existing vote, delete the vote
       if (existingVote.type === voteType) {
         await db.vote.delete({
           where: {
@@ -42,57 +44,95 @@ export async function PATCH(req: Request) {
             },
           },
         });
+
+        // Recount the votes
+        const votesAmt = post.votes.reduce((acc, vote) => {
+          if (vote.type === "UP") return acc + 1;
+          if (vote.type === "DOWN") return acc - 1;
+          return acc;
+        }, 0);
+
+        if (votesAmt >= CACHE_AFTER_UPVOTES) {
+          const cachePayload: CachedPost = {
+            authorUsername: post.author.username ?? "",
+            content: JSON.stringify(post.content),
+            id: post.id,
+            title: post.title,
+            currentVote: null,
+            createdAt: post.createdAt,
+          };
+
+          await redis.hset(`post:${postId}`, cachePayload); // Store the post data as a hash
+        }
+
         return new Response("OK");
       }
+
+      // if vote type is different, update the vote
       await db.vote.update({
-        where: { userId_postId: { postId, userId: session.user.id } },
-        data: { type: voteType },
+        where: {
+          userId_postId: {
+            postId,
+            userId: session.user.id,
+          },
+        },
+        data: {
+          type: voteType,
+        },
       });
-    } else {
+
+      // Recount the votes
       const votesAmt = post.votes.reduce((acc, vote) => {
         if (vote.type === "UP") return acc + 1;
         if (vote.type === "DOWN") return acc - 1;
         return acc;
       }, 0);
 
-      if (votesAmt >= CACHE_AFTER_UPVOTE) {
+      if (votesAmt >= CACHE_AFTER_UPVOTES) {
         const cachePayload: CachedPost = {
-          authorUserName: post.author.username ?? "",
+          authorUsername: post.author.username ?? "",
           content: JSON.stringify(post.content),
-          createdAt: post.createdAt,
           id: post.id,
           title: post.title,
           currentVote: voteType,
+          createdAt: post.createdAt,
         };
-        await redis.hset(`post:${postId}`, cachePayload);
+
+        await redis.hset(`post:${postId}`, cachePayload); // Store the post data as a hash
       }
+
       return new Response("OK");
     }
 
+    // if no existing vote, create a new vote
     await db.vote.create({
       data: {
         type: voteType,
         userId: session.user.id,
-        postId: postId,
+        postId,
       },
     });
+
+    // Recount the votes
     const votesAmt = post.votes.reduce((acc, vote) => {
       if (vote.type === "UP") return acc + 1;
       if (vote.type === "DOWN") return acc - 1;
       return acc;
     }, 0);
 
-    if (votesAmt >= CACHE_AFTER_UPVOTE) {
+    if (votesAmt >= CACHE_AFTER_UPVOTES) {
       const cachePayload: CachedPost = {
-        authorUserName: post.author.username ?? "",
+        authorUsername: post.author.username ?? "",
         content: JSON.stringify(post.content),
-        createdAt: post.createdAt,
         id: post.id,
         title: post.title,
         currentVote: voteType,
+        createdAt: post.createdAt,
       };
-      await redis.hset(`post:${postId}`, cachePayload);
+
+      await redis.hset(`post:${postId}`, cachePayload); // Store the post data as a hash
     }
+
     return new Response("OK");
   } catch (err) {
     if (err instanceof z.ZodError) {
