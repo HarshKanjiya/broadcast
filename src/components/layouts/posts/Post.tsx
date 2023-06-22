@@ -3,6 +3,9 @@ import { Post, User, Vote } from "@prisma/client";
 import { MessageSquare } from "lucide-react";
 import { FC, useRef } from "react";
 import EditorOutputContent from "./EditorOutputContent";
+import PostVoteClient from "./Votes/PostVoteClient";
+
+type PartialVote = Pick<Vote, "type">;
 
 interface PostProps {
   broadcastName?: string;
@@ -11,17 +14,28 @@ interface PostProps {
     votes: Vote[];
   };
   commentAmt: number;
+  votesAmt: number;
+  currentVote?: PartialVote;
 }
 
-const Post: FC<PostProps> = ({ broadcastName, post, commentAmt }) => {
+const Post: FC<PostProps> = ({
+  broadcastName,
+  post,
+  commentAmt,
+  votesAmt: votesAmt,
+  currentVote,
+}) => {
   const pRef = useRef<HTMLDivElement>(null);
   return (
     <div className="rounded-md overflow-hidden bg-white shadow-[rgba(7,_65,_210,_0.1)_0px_9px_30px]">
-      <div className="px-6 py-4 flex justify-between">
-        {/*  */}
-
-        <div className="w-0 flex-1">
-          <div className="max-h-40 mt-1 text-xs text-gray-500 ">
+      <div className="px-3 sm:px-6 py-2 sm:py-4 flex-col sm:flex-row flex w-full justify-between">
+        <PostVoteClient
+          postId={post.id}
+          initialVoteAmt={votesAmt}
+          initialVote={currentVote?.type}
+        />
+        <div className="flex-1 w-full ">
+          <div className="max-h-40 sm:mt-1 text-xs text-gray-500 ">
             {broadcastName ? (
               <>
                 <a
@@ -52,7 +66,7 @@ const Post: FC<PostProps> = ({ broadcastName, post, commentAmt }) => {
           </div>
         </div>
       </div>
-      <div className="bg-gray-50 z-20 text-sm p-4 sm:px-6">
+      <div className="bg-gray-50 z-20 text-sm p-3 sm:px-6 w-full">
         <a
           className="w-fit flex items-center gap-2"
           href={`/broadcast/${broadcastName}/post/${post.id}`}

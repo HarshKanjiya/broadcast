@@ -23,10 +23,10 @@ const UserAvatar: FC<UserAvatarProps> = ({ user, ...props }) => {
         </div>
       ) : (
         <AvatarFallback>
+          <Icons.User className="h-6 w-6" color="#b1b1b1" />
           <span className="sr-only">{user?.name}</span>
         </AvatarFallback>
       )}
-      <Icons.User className="h-6 w-6" color="rgb(11, 11, 11)" />
     </Avatar>
   );
 };

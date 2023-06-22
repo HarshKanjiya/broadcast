@@ -62,16 +62,20 @@ const PostFeed: FC<PostFeedProps> = ({ broadcastName, initialPosts }) => {
                 commentAmt={post.comments.length}
                 post={post}
                 broadcastName={broadcastName}
+                votesAmt={votesAmt}
+                currentVote={currentVote}
               />
             </li>
           );
         } else {
           return (
             <Post
-              commentAmt={post.comments.length}
-              post={post}
               key={post.id}
+              post={post}
               broadcastName={broadcastName}
+              commentAmt={post.comments.length}
+              votesAmt={votesAmt}
+              currentVote={currentVote}
             />
           );
         }
