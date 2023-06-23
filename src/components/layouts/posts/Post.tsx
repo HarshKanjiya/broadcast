@@ -2,6 +2,7 @@ import { formatTimeToNow } from "@/lib/utils";
 import { Post, User, Vote } from "@prisma/client";
 import { MessageSquare } from "lucide-react";
 import { FC, useRef } from "react";
+import moment from "moment";
 import EditorOutputContent from "./EditorOutputContent";
 import PostVoteClient from "./Votes/PostVoteClient";
 
@@ -48,7 +49,8 @@ const Post: FC<PostProps> = ({
               </>
             ) : null}
             <span className="pr-4">Posted by {post.author.name}</span>
-            {formatTimeToNow(post.createdAt)}
+            {/* {formatTimeToNow(post.createdAt)} */}
+            {moment(post.createdAt).fromNow()}
           </div>
           <a href={`/broadcast/${broadcastName}/post/${post.id}`}>
             <h1 className="text-lg font-semibold py-2 leading-6 text-gray-900">

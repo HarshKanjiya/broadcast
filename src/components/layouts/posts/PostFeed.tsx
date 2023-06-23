@@ -7,6 +7,7 @@ import { INFINITE_SCROLLING_PAGINATION_VARIABLE } from "@/config";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import Post from "./Post";
+import PostFeedSkeleton from "../skeleton/PostFeedSkeleton";
 
 interface PostFeedProps {
   initialPosts: ExtendedPost[];
@@ -86,6 +87,7 @@ const PostFeed: FC<PostFeedProps> = ({ broadcastName, initialPosts }) => {
           );
         }
       })}
+      {isFetchingNextPage ? <PostFeedSkeleton /> : null}
     </ul>
   );
 };
