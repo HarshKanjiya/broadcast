@@ -1,6 +1,7 @@
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import { FC } from "react";
+import { createReactEditorJS } from "react-editor-js";
 
 const Output = dynamic(
   async () => (await import("editorjs-react-renderer")).default,
@@ -24,13 +25,10 @@ const renderers = {
 };
 
 const EditorOutputContent: FC<EditorOutputContentProps> = ({ content }) => {
+  const ReactEditorJS = createReactEditorJS();
+
   return (
-    <Output
-      data={content}
-      style={style}
-      className="text-sm"
-      renderers={renderers}
-    />
+    <ReactEditorJS defaultValue={content} holder="RENDERER"  />
   );
 };
 
@@ -52,6 +50,7 @@ function CustomCodeRenderer({ data }: any) {
     </pre>
   );
 }
+
 
 EditorOutputContent.displayName = "EditorOutputContent";
 export default EditorOutputContent;

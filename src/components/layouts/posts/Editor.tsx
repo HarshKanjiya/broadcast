@@ -39,14 +39,22 @@ const Editor: FC<EditorProps> = ({ broadcastId, broadcastName }) => {
 
   const initializeEditor = useCallback(async () => {
     const EditorJS = (await import("@editorjs/editorjs")).default;
+
     const Header = (await import("@editorjs/header")).default;
+    const Paragraph = (await import("@editorjs/paragraph")).default;
+    const List = (await import("@editorjs/list")).default;
+    const Quote = (await import("@editorjs/quote")).default;
+    const Code = (await import("@editorjs/code")).default;
     const Embed = (await import("@editorjs/embed")).default;
     const Table = (await import("@editorjs/table")).default;
-    const List = (await import("@editorjs/list")).default;
-    const Code = (await import("@editorjs/code")).default;
-    const LinkTool = (await import("@editorjs/link")).default;
+    const Warning = (await import("@editorjs/warning")).default;
+    const Raw = (await import("@editorjs/raw")).default;
+    const Delimiter = (await import("@editorjs/delimiter")).default;
     const InlineCode = (await import("@editorjs/inline-code")).default;
-    const ImageTool = (await import("@editorjs/image")).default;
+    const Marker = (await import("@editorjs/marker")).default;
+    const CheckList = (await import("@editorjs/checklist")).default;
+    const Image = (await import("@editorjs/image")).default;
+    const LinkTool = (await import("@editorjs/link")).default;
 
     if (!ref.current) {
       const editor = new EditorJS({
@@ -59,14 +67,26 @@ const Editor: FC<EditorProps> = ({ broadcastId, broadcastName }) => {
         data: { blocks: [] },
         tools: {
           header: Header,
-          // linkTool: {
-          //   class: LinkTool,
-          //   config: {
-          //     endpoint: "/api/link",
-          //   },
-          // },
+          paragraph: Paragraph,
+          list: List,
+          quote: Quote,
+          code: Code,
+          embed: Embed,
+          table: Table,
+          warning: Warning,
+          raw: Raw,
+          delimiter: Delimiter,
+          inlineCode: InlineCode,
+          marker: Marker,
+          checklist: CheckList,
+          linkTool: {
+            class: LinkTool,
+            config: {
+              endpoint: "/api/link",
+            },
+          },
           image: {
-            class: ImageTool,
+            class: Image,
             config: {
               uploader: {
                 async uploadByFile(file: File) {
@@ -81,11 +101,6 @@ const Editor: FC<EditorProps> = ({ broadcastId, broadcastName }) => {
               },
             },
           },
-          // list: List,
-          code: Code,
-          inlineCode: InlineCode,
-          // table: Table,
-          embed: Embed,
         },
       });
     }
