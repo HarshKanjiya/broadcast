@@ -69,7 +69,7 @@ const PostFeed: FC<PostFeedProps> = ({ broadcastName, initialPosts }) => {
                 <Post
                   commentAmt={post.comments.length}
                   post={post}
-                  broadcastName={broadcastName}
+                  broadcastName={post.broadcast.name}
                   votesAmt={votesAmt}
                   currentVote={currentVote}
                 />
@@ -80,7 +80,7 @@ const PostFeed: FC<PostFeedProps> = ({ broadcastName, initialPosts }) => {
               <Post
                 key={post.id}
                 post={post}
-                broadcastName={broadcastName}
+                broadcastName={post.broadcast.name}
                 commentAmt={post.comments.length}
                 votesAmt={votesAmt}
                 currentVote={currentVote}

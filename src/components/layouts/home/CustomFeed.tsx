@@ -15,7 +15,14 @@ const CustomFeed = async ({}) => {
     },
   });
 
-  const posts = await db.post.findFirst({
+  const posts = await db.post.findMany({
+    where: {
+      broadcast: {
+        name: {
+          in: followedCommunities.map(({ broadcast }) => broadcast.id),
+        },
+      },
+    },
     orderBy: {
       createdAt: "desc",
     },
@@ -27,7 +34,7 @@ const CustomFeed = async ({}) => {
     },
     take: INFINITE_SCROLLING_PAGINATION_VARIABLE,
   });
-  //@ts-expect-error
+
   return <PostFeed initialPosts={posts} />;
 };
 

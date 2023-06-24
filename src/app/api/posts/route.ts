@@ -23,24 +23,24 @@ export async function GET(req: Request) {
   }
 
   try {
-    const { limit, page, subredditName } = z
+    const { limit, page, broadcastName } = z
       .object({
         limit: z.string(),
         page: z.string(),
-        subredditName: z.string().nullish().optional(),
+        broadcastName: z.string().nullish().optional(),
       })
       .parse({
-        subredditName: url.searchParams.get("subredditName"),
+        broadcastName: url.searchParams.get("broadcastName"),
         limit: url.searchParams.get("limit"),
         page: url.searchParams.get("page"),
       });
 
     let whereClause = {};
 
-    if (subredditName) {
+    if (broadcastName) {
       whereClause = {
         broadcast: {
-          name: subredditName,
+          name: broadcastName,
         },
       };
     } else if (session) {
