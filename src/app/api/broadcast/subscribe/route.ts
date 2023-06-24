@@ -17,7 +17,7 @@ export async function POST(req: Request) {
 
     const subscriptionExistance = await db.subscription.findFirst({
       where: {
-        BroadcastId: broadcastId,
+        broadcastId: broadcastId,
         userId: session.user.id,
       },
     });
@@ -30,7 +30,7 @@ export async function POST(req: Request) {
 
     await db.subscription.create({
       data: {
-        BroadcastId: broadcastId,
+        broadcastId: broadcastId,
         userId: session.user.id,
       },
     });

@@ -1,5 +1,4 @@
 import Editor from "@/components/layouts/posts/Editor";
-import { Button } from "@/components/ui/Button";
 import { db } from "@/lib/db";
 import { notFound } from "next/navigation";
 

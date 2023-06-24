@@ -24,7 +24,7 @@ export default function RootLayout({
       lang="en"
       className={cn(
         " text-slate-900 bg-white antialiased light",
-        // inter.className
+        inter.className
       )}
     >
       <Providers>

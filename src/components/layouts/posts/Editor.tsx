@@ -59,12 +59,12 @@ const Editor: FC<EditorProps> = ({ broadcastId, broadcastName }) => {
         data: { blocks: [] },
         tools: {
           header: Header,
-          linkTool: {
-            class: LinkTool,
-            config: {
-              endpoint: "/api/link",
-            },
-          },
+          // linkTool: {
+          //   class: LinkTool,
+          //   config: {
+          //     endpoint: "/api/link",
+          //   },
+          // },
           image: {
             class: ImageTool,
             config: {
@@ -81,10 +81,10 @@ const Editor: FC<EditorProps> = ({ broadcastId, broadcastName }) => {
               },
             },
           },
-          list: List,
+          // list: List,
           code: Code,
           inlineCode: InlineCode,
-          table: Table,
+          // table: Table,
           embed: Embed,
         },
       });

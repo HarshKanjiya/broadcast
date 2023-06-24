@@ -58,8 +58,8 @@ model User {
   accounts    Account[]
   sessions    Session[]
   Post        Post[]
-  Comment     Comment[]
-  CommentVote CommentVote[]
+  comment     Comment[]
+  commentVote CommentVote[]
 }
 
 model Broadcast {
@@ -70,7 +70,7 @@ model Broadcast {
   posts     Post[]
 
   creatorId   String?
-  Creator     User?          @relation("CreatedBy", fields: [creatorId], references: [id])
+  creator     User?          @relation("CreatedBy", fields: [creatorId], references: [id])
   subscribers Subscription[]
 
   @@index([name])
@@ -79,10 +79,10 @@ model Broadcast {
 model Subscription {
   user        User      @relation(fields: [userId], references: [id])
   userId      String
-  Broadcast   Broadcast @relation(fields: [BroadcastId], references: [id])
-  BroadcastId String
+  broadcast   Broadcast @relation(fields: [broadcastId], references: [id])
+  broadcastId String
 
-  @@id([userId, BroadcastId])
+  @@id([userId, broadcastId])
 }
 
 model Post {

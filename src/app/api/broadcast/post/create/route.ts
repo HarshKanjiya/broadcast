@@ -18,7 +18,7 @@ export async function POST(req: Request) {
 
     const subscriptionExistance = await db.subscription.findFirst({
       where: {
-        BroadcastId: broadcastId,
+        broadcastId: broadcastId,
         userId: session.user.id,
       },
     });

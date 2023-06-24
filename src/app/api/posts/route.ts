@@ -15,11 +15,11 @@ export async function GET(req: Request) {
         userId: session.user.id,
       },
       include: {
-        Broadcast: true,
+        broadcast: true,
       },
     });
 
-    followedCommunitiesIds = followedCommunities.map((sub) => sub.Broadcast.id);
+    followedCommunitiesIds = followedCommunities.map((sub) => sub.broadcast.id);
   }
 
   try {

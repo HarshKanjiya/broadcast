@@ -9,7 +9,7 @@ const NavBar = async ({}) => {
   return (
     <div className="py-2 fixed top-0 inset-x-0 h-fit border-b flex justify-between items-center  w-full bg-white z-10 border-zinc-200 ">
       <div className="container max-w-7xl h-full mx-auto flex items-center justify-between gap-2 ">
-        <Link href="/" className="flex gap-2 items-center justify-center ">
+        <Link href="/" className="flex gap-2 items-center justify-center py-2 ">
           <Icons.Logo
             className="w-8 h-8 sm:w-6 sm:h-6 "
             color="rgb(15,23,42)"

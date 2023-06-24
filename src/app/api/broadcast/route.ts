@@ -30,7 +30,7 @@ export async function POST(req: Request) {
     await db.subscription.create({
       data: {
         userId: session.user.id,
-        BroadcastId: broadcast.id,
+        broadcastId: broadcast.id,
       },
     });
 

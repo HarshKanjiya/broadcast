@@ -29,7 +29,7 @@ const layout = async ({ children, params: { slug } }: layoutProps) => {
     ? undefined
     : await db.subscription.findFirst({
         where: {
-          Broadcast: {
+          broadcast: {
             name: slug,
           },
           user: {
@@ -41,7 +41,7 @@ const layout = async ({ children, params: { slug } }: layoutProps) => {
 
   const memberCount = await db.subscription.count({
     where: {
-      Broadcast: {
+      broadcast: {
         name: slug,
       },
     },
