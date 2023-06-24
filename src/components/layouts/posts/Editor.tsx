@@ -115,7 +115,6 @@ const Editor: FC<EditorProps> = ({ broadcastId, broadcastName }) => {
   useEffect(() => {
     if (Object.keys(errors).length) {
       for (const [_key, value] of Object.entries(errors)) {
-        console.log("values :>> ", value);
         // @ts-ignore
         toast.error(value as string);
       }
