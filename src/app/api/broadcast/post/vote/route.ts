@@ -23,7 +23,6 @@ export async function PATCH(req: Request) {
       },
     });
 
-
     const post = await db.post.findUnique({
       where: { id: postId },
       include: { author: true, votes: true },
@@ -55,6 +54,7 @@ export async function PATCH(req: Request) {
         if (votesAmt >= CACHE_AFTER_UPVOTES) {
           const cachePayload: CachedPost = {
             authorUsername: post.author.username ?? "",
+            authorImage: post.author.image,
             content: JSON.stringify(post.content),
             id: post.id,
             title: post.title,
@@ -93,6 +93,8 @@ export async function PATCH(req: Request) {
           authorUsername: post.author.username ?? "",
           content: JSON.stringify(post.content),
           id: post.id,
+          authorImage: post.author.image,
+
           title: post.title,
           currentVote: voteType,
           createdAt: post.createdAt,
@@ -124,6 +126,8 @@ export async function PATCH(req: Request) {
       const cachePayload: CachedPost = {
         authorUsername: post.author.username ?? "",
         content: JSON.stringify(post.content),
+        authorImage: post.author.image,
+
         id: post.id,
         title: post.title,
         currentVote: voteType,

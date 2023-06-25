@@ -1,3 +1,4 @@
+"use client"
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import { FC } from "react";
@@ -26,9 +27,10 @@ const renderers = {
 
 const EditorOutputContent: FC<EditorOutputContentProps> = ({ content }) => {
   const ReactEditorJS = createReactEditorJS();
+  console.log('content :>> ', content);
 
   return (
-    <ReactEditorJS defaultValue={content} holder="RENDERER"  />
+    <ReactEditorJS readOnly defaultValue={content} holder="RENDERER"  />
   );
 };
 

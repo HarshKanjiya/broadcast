@@ -52,7 +52,7 @@ const Post: FC<PostProps> = ({
             {/* {formatTimeToNow(post.createdAt)} */}
             {moment(post.createdAt).fromNow()}
           </div>
-          <a href={`/broadcast/${broadcastName}/post/${post.id}`}>
+          <a href={`/broadcast/post/${post.id}`}>
             <h1 className="text-lg font-semibold py-2 leading-6 text-gray-900">
               {post.title}
             </h1>
