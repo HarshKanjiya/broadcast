@@ -1,5 +1,7 @@
+import CommentsSection from "@/components/layouts/posts/CommentsSection";
 import EditorOutputContent from "@/components/layouts/posts/EditorOutputContent";
 import PostVoteServer from "@/components/layouts/posts/Votes/PostVoteServer";
+import CommentsSkeleton from "@/components/layouts/skeleton/CommentsSkeleton";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { db } from "@/lib/db";
 import { redis } from "@/lib/radis";
@@ -27,9 +29,9 @@ const page = async ({ params }: pageProps) => {
 
   let post:
     | (Post & {
-        votes: Vote[];
-        author: User;
-      })
+      votes: Vote[];
+      author: User;
+    })
     | null = null;
 
   if (!cachedPost) {
@@ -97,10 +99,15 @@ const page = async ({ params }: pageProps) => {
           </div>
 
           <h1 className="text-xl font-semibold py-2 leading-6 to-gray-900 ">
-            {post?.title }
+            {post?.title}
           </h1>
 
-          <EditorOutputContent content={post?.content } />
+          <EditorOutputContent content={post?.content} />
+
+          <Suspense fallback={<CommentsSkeleton />} >
+            {/* @ts-ignore */}
+            <CommentsSection postId={post?.id ?? cachedPost?.id} />
+          </Suspense>
         </div>
       </div>
     </div>

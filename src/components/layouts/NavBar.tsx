@@ -4,7 +4,7 @@ import { buttonVariants } from "../ui/Button";
 import { getAuthSession } from "@/lib/AuthOptions";
 import UserProfile from "./profile/UserProfile";
 
-const NavBar = async ({}) => {
+const NavBar = async ({ }) => {
   const session = await getAuthSession();
   return (
     <div className="py-2 fixed top-0 inset-x-0 h-fit border-b flex justify-between items-center  w-full bg-white z-10 border-zinc-200 ">
