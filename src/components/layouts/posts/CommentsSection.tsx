@@ -32,7 +32,7 @@ const CommentsSection = async ({ postId }: CommentsSectionProps) => {
     return <div className="flex flex-col mt-4 gap-y-4" >
         <hr className="w-full h-px my-6" />
 
-        <CreateComment />
+        <CreateComment postId={postId} />
 
         <div className="flex flex-col  gap-y-6 mt-4" >
             {
@@ -47,9 +47,26 @@ const CommentsSection = async ({ postId }: CommentsSectionProps) => {
 
                         const topLvlCmtVote = topLvlCmt.votes.find((vote) => vote.userId === sesssion?.user.id)
 
-
                         return (<div className="flex flex-col" key={topLvlCmt.id}>
-                            <PostComment comment={topLvlCmt} />
+
+                            <PostComment comment={topLvlCmt} postId={postId} currentVote={topLvlCmtVote} votesAmt={topLvlCmtVoteAmt} />
+                            {
+                                topLvlCmt.replies.sort((a, b) => b.votes.length - a.votes.length).map((reply) => {
+
+                                    const replyVoteAmt = topLvlCmt.votes.reduce((acc, vote) => {
+                                        if (vote.type === "UP") return acc + 1
+                                        if (vote.type === "DOWN") return acc - 1
+                                        return acc
+                                    }, 0)
+
+                                    const replyVote = topLvlCmt.votes.find((vote) => vote.userId === sesssion?.user.id)
+
+                                    return <div key={reply.id} className="ml-2 py-2 pl-4 border-l-2 border-zinc-200" >
+                                        <PostComment comment={reply} currentVote={replyVote} postId={postId} votesAmt={replyVoteAmt} />
+                                    </div>
+                                })
+
+                            }
                         </div>)
                     })
             }

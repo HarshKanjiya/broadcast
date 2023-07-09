@@ -50,7 +50,7 @@ const page = async ({ params }: pageProps) => {
 
   return (
     <div>
-      <div className="h-full flex flex-col sm:flex-row items-center sm:items-start justify-between">
+      <div className="h-full flex flex-col sm:flex-row items-center sm:items-start justify-between pb-10">
         <Suspense
           fallback={
             <Skeleton className="sm:ml-4 w-20 h-6 sm:h-20 sm:w-8 mb-4 sm:mb-0 " />
@@ -71,7 +71,7 @@ const page = async ({ params }: pageProps) => {
             }}
           />
         </Suspense>
-        <div className="sm:w-0 w-full bg-white rounded-sm flex-1 p-4 sm:px-4 sm:py-3  ">
+        <div className="sm:w-0 w-full bg-white rounded-sm flex-1 p-4 sm:px-4 sm:py-3 shadow-sm  ">
           <div className="pb-2 flex flex-col gap-2">
             <p className="text-xs text-gray-500">Posted by</p>
             <div className="flex gap-4 items-center justify-start ">
