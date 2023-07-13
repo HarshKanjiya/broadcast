@@ -58,7 +58,7 @@ const PostComment = ({ comment, currentVote, postId, votesAmt }: PostCommentProp
     })
 
     return (
-        <div ref={commentRef} className="flex flex-col " >
+        <div ref={commentRef} className="flex flex-col gap-y-1 py-1 " >
             <div className="flex items-center" >
                 <UserAvatar
                     className="h-8 w-8"
