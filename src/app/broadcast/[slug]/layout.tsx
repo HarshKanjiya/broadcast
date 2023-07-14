@@ -28,15 +28,15 @@ const layout = async ({ children, params: { slug } }: layoutProps) => {
   const subscription = !session?.user
     ? undefined
     : await db.subscription.findFirst({
-        where: {
-          broadcast: {
-            name: slug,
-          },
-          user: {
-            id: session.user.id,
-          },
+      where: {
+        broadcast: {
+          name: slug,
         },
-      });
+        user: {
+          id: session.user.id,
+        },
+      },
+    });
   const isSubscribed = !!subscription;
 
   const memberCount = await db.subscription.count({
@@ -51,9 +51,10 @@ const layout = async ({ children, params: { slug } }: layoutProps) => {
     <div className=" sm:container max-w-7xl mx-auto h-full pt-12 ">
       <div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-y-4 md:gap-x-4 py-6">
-          <div className="flex flex-col col-span-2 space-y-6">{children}</div>
-          {/* //*information bar */}
+          <div className="flex flex-col col-span-2 space-y-6">
 
+            {children}</div>
+          {/* //*information bar */}
           <div className="hidden md:block overflow-hidden h-fit rounded-lg border border-gray-200  order-first md:order-last">
             <div className="px-6 py-4">
               <p className="font-semibold py-3">

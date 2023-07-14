@@ -14,11 +14,12 @@ import SignOutButton from "@/components/ui/SignOutButton";
 
 interface UserProfileProps {
   user: Pick<User, "name" | "email" | "image">;
+  username: string | undefined
 }
 
-const UserProfile: FC<UserProfileProps> = ({ user }) => {
+const UserProfile: FC<UserProfileProps> = ({ user, username }) => {
   return (
-    <div className="flex items-center ">
+    <div className="flex items-center gap-5 sm:gap-8 ">
       <DropdownMenu>
         <DropdownMenuTrigger>
           <UserAvatar
@@ -28,7 +29,7 @@ const UserProfile: FC<UserProfileProps> = ({ user }) => {
         <DropdownMenuContent className="bg-white" align="end">
           <div className="flex flex-col space-y-1 p-2 ">
             <div className="flex flex-col space-y-1 leading-none ">
-              {user?.name && <p className=" font-medium ">{user?.name}</p>}
+              {username ? <p className=" font-medium ">{username}</p> : <p className=" font-medium ">{user?.name}</p>}
               {user?.email && (
                 <p className=" w-[200px] truncate text-sm text-zinc-700 ">
                   {user?.email}

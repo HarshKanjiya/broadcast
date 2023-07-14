@@ -66,7 +66,7 @@ const PostComment = ({ comment, currentVote, postId, votesAmt }: PostCommentProp
                 />
                 <div className="ml-4 flex items-center gap-x-2" >
                     <p className="text-sm  font-medium text-gray-900" >
-                        {comment.author.name}
+                        {comment.author.username}
                     </p>
                     <p className="max-h-40 truncate text-xs text-zinc-500" >
                         {moment(comment.createdAt).toNow()}

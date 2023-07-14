@@ -2,13 +2,13 @@
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { useRouter } from "next/navigation";
-import { FC, useState } from "react";
+import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
 import { CreateBroadcastPayload } from "@/lib/validators/broadcast";
 import { toast } from "react-hot-toast";
 
-const Page: FC = ({}) => {
+const Page = ({ }) => {
   const router = useRouter();
   const [name, setName] = useState<string>("");
   const [err, setErr] = useState<string>("");

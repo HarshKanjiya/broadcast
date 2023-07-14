@@ -22,11 +22,11 @@ const NavBar = async ({ }) => {
             </span>
           </p>
         </Link>
-        
+
         <SearchBar />
 
         {session?.user ? (
-          <UserProfile user={session?.user} />
+          <UserProfile user={session?.user} username={session?.user.username || undefined} />
         ) : (
           <Link href="/signin" className={buttonVariants()}>
             Sign In

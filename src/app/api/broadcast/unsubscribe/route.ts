@@ -17,7 +17,7 @@ export async function POST(req: Request) {
 
     const subscriptionExistance = await db.subscription.findFirst({
       where: {
-        BroadcastId: broadcastId,
+        broadcastId: broadcastId,
         userId: session.user.id,
       },
     });
@@ -42,8 +42,8 @@ export async function POST(req: Request) {
 
     await db.subscription.delete({
       where: {
-        userId_BroadcastId: {
-          BroadcastId: broadcastId,
+        userId_broadcastId: {
+          broadcastId: broadcastId,
           userId: session.user.id,
         },
       },

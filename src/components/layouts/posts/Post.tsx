@@ -48,7 +48,7 @@ const Post: FC<PostProps> = ({
                 <span className="px-2">•</span>
               </>
             ) : null}
-            <span className="pr-4">Posted by {post.author.name}</span>
+            <span className="pr-4">Posted by {post.author.username}</span>
             {/* {formatTimeToNow(post.createdAt)} */}
             {moment(post.createdAt).fromNow()}
           </div>
@@ -71,7 +71,7 @@ const Post: FC<PostProps> = ({
       <div className="bg-gray-50 z-20 text-sm p-3 sm:px-6 w-full">
         <a
           className="w-fit flex items-center gap-2"
-          href={`/broadcast/${broadcastName}/post/${post.id}`}
+          href={`/broadcast/post/${post.id}`}
         >
           <MessageSquare className="h-4 w-4" />
           {commentAmt} comments

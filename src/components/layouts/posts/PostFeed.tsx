@@ -67,6 +67,7 @@ const PostFeed: FC<PostFeedProps> = ({ broadcastName, initialPosts }) => {
             return (
               <li key={post.id} ref={ref}>
                 <Post
+                  key={post.id}
                   commentAmt={post.comments.length}
                   post={post}
                   broadcastName={post.broadcast.name}
