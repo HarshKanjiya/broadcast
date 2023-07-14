@@ -5,7 +5,7 @@ import { getAuthSession } from "@/lib/AuthOptions";
 import { HomeIcon, Plus } from "lucide-react";
 import Link from "next/link";
 
-const page = async ({}) => {
+const page = async ({ }) => {
   const session = await getAuthSession();
   return (
     <>
@@ -13,6 +13,7 @@ const page = async ({}) => {
       <div className=" grid grid-cols-1 md:grid-cols-3 gap-y-4 md:gap-x-4 py-6 ">
         {/*//* feed  */}
 
+        {/* @ts-ignore */}
         {session ? <CustomFeed /> : <GenralFeed />}
 
         {/*//* broadcast  */}
