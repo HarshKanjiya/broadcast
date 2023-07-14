@@ -14,7 +14,7 @@ const page = async ({ }) => {
         {/*//* feed  */}
 
         {/* @ts-ignore */}
-        {session ? <CustomFeed /> : <GenralFeed />}
+        {session ? <CustomFeed /> : null}
 
         {/*//* broadcast  */}
         <div className="overflow-hidden h-fit rounded-lg border border-gray-200  order-first md:order-last ">

@@ -1,16 +1,16 @@
 "use client";
-import { FC, useCallback, useEffect, useRef, useState } from "react";
-import TextareaAutosize from "react-textarea-autosize";
-import { useForm } from "react-hook-form";
-import { PostCreationRequest, PostValidator } from "@/lib/validators/post";
-import { zodResolver } from "@hookform/resolvers/zod";
-import type EditorJS from "@editorjs/editorjs";
+import { Button } from "@/components/ui/Button";
 import { uploadFiles } from "@/lib/UploadThing";
-import { toast } from "react-hot-toast";
+import { PostCreationRequest, PostValidator } from "@/lib/validators/post";
+import type EditorJS from "@editorjs/editorjs";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { usePathname, useRouter } from "next/navigation";
-import { Button } from "@/components/ui/Button";
+import { FC, useCallback, useEffect, useRef, useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
+import TextareaAutosize from "react-textarea-autosize";
 
 interface EditorProps {
   broadcastId: string;
@@ -41,20 +41,13 @@ const Editor: FC<EditorProps> = ({ broadcastId, broadcastName }) => {
     const EditorJS = (await import("@editorjs/editorjs")).default;
 
     const Header = (await import("@editorjs/header")).default;
-    const Paragraph = (await import("@editorjs/paragraph")).default;
     const List = (await import("@editorjs/list")).default;
-    const Quote = (await import("@editorjs/quote")).default;
     const Code = (await import("@editorjs/code")).default;
     const Embed = (await import("@editorjs/embed")).default;
-    const Table = (await import("@editorjs/table")).default;
-    const Warning = (await import("@editorjs/warning")).default;
-    const Raw = (await import("@editorjs/raw")).default;
-    const Delimiter = (await import("@editorjs/delimiter")).default;
+    // const Table = (await import("@editorjs/table")).default;
     const InlineCode = (await import("@editorjs/inline-code")).default;
-    const Marker = (await import("@editorjs/marker")).default;
-    const CheckList = (await import("@editorjs/checklist")).default;
     const Image = (await import("@editorjs/image")).default;
-    const LinkTool = (await import("@editorjs/link")).default;
+    // const LinkTool = (await import("@editorjs/link")).default;
 
     if (!ref.current) {
       const editor = new EditorJS({
@@ -67,24 +60,18 @@ const Editor: FC<EditorProps> = ({ broadcastId, broadcastName }) => {
         data: { blocks: [] },
         tools: {
           header: Header,
-          paragraph: Paragraph,
           list: List,
-          quote: Quote,
           code: Code,
           embed: Embed,
-          table: Table,
-          warning: Warning,
-          raw: Raw,
-          delimiter: Delimiter,
+          // table: Table,
           inlineCode: InlineCode,
-          marker: Marker,
-          checklist: CheckList,
-          linkTool: {
-            class: LinkTool,
-            config: {
-              endpoint: "/api/link",
-            },
-          },
+          // linkTool: {
+          //   class: LinkTool,
+          //   inlineToolbar:true,
+          //   config: {
+          //     // endpoint: "/api/link",
+          //   },  
+          // },
           image: {
             class: Image,
             config: {

@@ -98,7 +98,7 @@ const page = async ({ params }: pageProps) => {
             </div>
           </div>
 
-          <h1 className="text-xl font-semibold py-2 leading-6 to-gray-900 ">
+          <h1 className="text-3xl sm:text-4xl font-bold py-4 pb-8 sm:pb-12 leading-6 to-gray-900 ">
             {post?.title}
           </h1>
 
