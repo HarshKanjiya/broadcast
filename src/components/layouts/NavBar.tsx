@@ -4,9 +4,40 @@ import { buttonVariants } from "../ui/Button";
 import { getAuthSession } from "@/lib/AuthOptions";
 import UserProfile from "./profile/UserProfile";
 import SearchBar from "./SearchBar";
+import { db } from "@/lib/db";
+import NotificationEle from "./profile/Notification";
 
 const NavBar = async ({ }) => {
   const session = await getAuthSession();
+
+  const notifications = await db.notification.findMany({
+    where: {
+      userId: session?.user.id
+    },
+    select: {
+      post: {
+        include: {
+          author: {
+            select: {
+              image: true,
+              username: true
+            }
+          },
+          broadcast: {
+            select: {
+              name: true
+            }
+          }
+        }
+      },
+      createdAt:true,
+      type: true
+    },
+    orderBy:{
+      createdAt:"desc"
+    }
+  })
+
   return (
     <div className="py-2 fixed top-0 inset-x-0 h-fit border-b flex justify-between items-center  w-full bg-white z-10 border-zinc-200 ">
       <div className="container max-w-7xl h-full mx-auto flex items-center justify-between gap-2 ">
@@ -26,7 +57,10 @@ const NavBar = async ({ }) => {
         <SearchBar />
 
         {session?.user ? (
-          <UserProfile user={session?.user} username={session?.user.username || undefined} />
+          <div className="flex items-center gap-6" >
+            <NotificationEle notifications={notifications} />
+            <UserProfile user={session?.user} username={session?.user.username || undefined} />
+          </div>
         ) : (
           <Link href="/signin" className={buttonVariants()}>
             Sign In

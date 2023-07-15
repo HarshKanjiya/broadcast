@@ -32,13 +32,31 @@ export async function POST(req: Request) {
       );
     }
 
-    await db.post.create({
+    const post = await db.post.create({
       data: {
         broadcastId: broadcastId,
         authorId: session.user.id,
         title,
         content,
       },
+    });
+
+    const followers = await db.subscription.findMany({
+      where: {
+        broadcastId: broadcastId,
+      },
+    });
+
+    let newData = followers.map((data) => {
+      if (data.userId !== session.user.id) {
+        return { userId: data.userId, postId: post.id, type: "UNSEEN" };
+      }
+    });
+
+    await db.notification.createMany({
+      skipDuplicates: true,
+      // @ts-ignore
+      data: [...newData],
     });
 
     return new Response("OK");

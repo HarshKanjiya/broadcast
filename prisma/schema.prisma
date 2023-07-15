@@ -16,6 +16,11 @@ enum VoteType {
   DOWN
 }
 
+enum NotificationType {
+  SEEN
+  UNSEEN
+}
+
 model Account {
   id                String  @id @default(cuid())
   userId            String
@@ -54,12 +59,13 @@ model User {
 
   username String? @unique
 
-  image       String?
-  accounts    Account[]
-  sessions    Session[]
-  Post        Post[]
-  comment     Comment[]
-  commentVote CommentVote[]
+  image        String?
+  accounts     Account[]
+  sessions     Session[]
+  Post         Post[]
+  comment      Comment[]
+  commentVote  CommentVote[]
+  Notification Notification[]
 }
 
 model Broadcast {
@@ -86,17 +92,18 @@ model Subscription {
 }
 
 model Post {
-  id          String    @id @default(cuid())
-  title       String
-  content     Json?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  author      User      @relation(fields: [authorId], references: [id])
-  authorId    String
-  broadcast   Broadcast @relation(fields: [broadcastId], references: [id])
-  broadcastId String
-  comments    Comment[]
-  votes       Vote[]
+  id           String         @id @default(cuid())
+  title        String
+  content      Json?
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  author       User           @relation(fields: [authorId], references: [id])
+  authorId     String
+  broadcast    Broadcast      @relation(fields: [broadcastId], references: [id])
+  broadcastId  String
+  comments     Comment[]
+  votes        Vote[]
+  Notification Notification[]
 }
 
 model Comment {
@@ -136,4 +143,17 @@ model CommentVote {
   type      VoteType
 
   @@id([userId, commentId])
+}
+
+model Notification {
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId String
+
+  type NotificationType? @default(UNSEEN)
+
+  createdAt DateTime @default(now())
+
+  @@id([userId, postId])
 }
