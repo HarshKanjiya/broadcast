@@ -34,7 +34,6 @@ const NotificationEle: FC<NotificationProps> = ({ notifications }) => {
             }
         },
         onSuccess: (data) => {
-            console.log('data :>> ', data);
             redirect(`/broadcast/post/${data.postId}`)
         }
     })
@@ -63,7 +62,7 @@ const NotificationEle: FC<NotificationProps> = ({ notifications }) => {
                         notifications.map((notif: any, index: number) => {
                             return (
                                 <DropdownMenuItem className={notif.type === "UNSEEN" ? "opacity-100" : "opacity-50"} key={index} asChild>
-                                    <Button variant="ghost" onClick={() => { mutate({ postId: notif.post.id, type: notif.type }) }} className='flex h-fit items-start gap-4 ring-0 hover:ring-0 focus:ring-0 ' >
+                                    <a href={`/broadcast/post/${notif.post.id}`} onClick={() => { mutate({ postId: notif.post.id, type: notif.type }) }} className='flex h-fit items-start gap-4 ring-0 hover:ring-0 focus:ring-0 ' >
                                         <div className='relative h-10 w-10 flex items-center rounded-full overflow-hidden' >
                                             <Image fill src={notif.post.author.image} alt="sf" />
                                         </div>
@@ -75,7 +74,7 @@ const NotificationEle: FC<NotificationProps> = ({ notifications }) => {
                                             <p>by {notif.post.author.username} on {notif.post.broadcast.name} Broadcast!</p>
                                         </div>
 
-                                    </Button>
+                                    </a>
                                 </DropdownMenuItem>
                             )
                         })
